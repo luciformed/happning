@@ -1,5 +1,8 @@
 "use strict";
 
+// --harmony_default_parameters
+// --harmony_destructuring
+
 const log = console.log.bind(console);
 
 const R = require("ramda");
@@ -7,16 +10,18 @@ const argv = require("yargs").argv;
 const moment = require("moment");
 
 const firebase = require("firebase");
-const firebaseConfig = require("./firebase-conf.json");
+const firebaseConfig = require("./config/firebase.json");
 
-// const app = firebase.initializeApp(firebaseConfig);
-// const db = app.database();
+const app = firebase.initializeApp(firebaseConfig);
+const db = app.database();
 
 const { filter, map, pluck, propEq, all, prop } = R;
 
+const happnConfig = require("./config/happn.json");
+
 const happnApi = require("./happn.js");
 
-const happn = new happnApi();
+const happn = new happnApi(happnConfig);
 
 const inDateRange = date => {
   return moment(date).isAfter(moment().subtract(argv.days, "days"));
@@ -48,10 +53,11 @@ const nextPage = offset => {
     });
 };
 
-const persistData = (data = []) => {
-  // filter(prop("id"), data).forEach(d => {
-  //   db.ref(`crossed-path/${d.id}`).set(d);
-  // });
+const persistData = data => {
+  data = data || [];
+  filter(prop("id"), data).forEach(d => {
+    db.ref(`crossed-path/${d.id}`).set(d);
+  });
   return data;
 };
 
@@ -92,11 +98,19 @@ const likeDemAll = () => {
       likeDemAll();
     })
     .catch(e => {
-      log(`that's it for today, total headcount is ${liked}`);
-      log({ e });
-      process.exit(0);
+      if (e) {
+        log({ e });
+      } else {
+        log(`that's it for today, total headcount is ${liked}`);
+        process.exit(0);
+      }
     });
 };
 
 // log(argv.days);
 happn.auth().then(likeDemAll);
+
+// db.ref("crossed-path").once("value").then(snapshot => {
+//     let count = snapshot.numChildren();
+//     log("firebase db count", { count });
+//   });

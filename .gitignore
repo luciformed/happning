@@ -1,2 +1,7 @@
 # Dependencies
 node_modules/
+
+
+# Settings
+config/
+persist/

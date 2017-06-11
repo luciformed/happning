@@ -1,0 +1,2 @@
+- [] firebase auth + database rules
+- [] firebase deploy
