@@ -1,0 +1,55 @@
+{
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "node": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "restParams": true,
+    "spread": true,
+    "templateStrings": true
+  },
+  "globals": {
+    "angular": true,
+    "_": true,
+    "R": true,
+    "$": true,
+    "toastr": true,
+    "module": true,
+    "inject": true
+  },
+  "rules": {
+    "eqeqeq": 0,
+    "curly": 2,
+    "quotes": [
+      0,
+      "single"
+    ],
+    "comma-dangle": 0,
+    "no-underscore-dangle": 0,
+    "camelcase": 0,
+    "no-unused-vars": 1,
+    "no-var": 1,
+    "object-shorthand": [
+      1,
+      "always"
+    ],
+    "no-use-before-define": [
+      2,
+      "nofunc"
+    ],
+    "no-unused-expressions": [
+      1
+    ]
+  }
+}
